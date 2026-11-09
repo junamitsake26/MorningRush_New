@@ -13,10 +13,12 @@
 
 const unsigned long thingspeakChannel = 3498116;
 
+// clear sensors staging
 bool bmpReady = false;
 bool touchReady = false;
 bool cloudReady = false;
 
+// FSM design
 enum State {
   DISABLED,
   STARTING,
@@ -25,6 +27,7 @@ enum State {
   SHUTTING_DOWN
 };
 
+// start in Disabled with cleared variables
 State state = DISABLED;
 bool active = false;
 bool presenceSensorsStarted = false;
@@ -37,11 +40,13 @@ float temperature = NAN;
 const char *presenceText = "UNKNOWN";
 uint32_t remainingMs = Config::ABSENCE_MS;
 
+// set mux to LDR, reset stored light conditions & wifi log
 bool muxActive = false;
 bool lightKnown = false;
 bool previousLight = false;
 uint32_t lastWifiSubmitAt = 0;
 
+// states as text for LCD printout
 const char *modeText() {
   switch (state) {
     case DISABLED:
